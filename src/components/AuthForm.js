@@ -2,9 +2,10 @@ import React from "react";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import { withStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/FormControl";
+import Button from "@material-ui/core/Button";
+import FormControl from '@material-ui/core/FormControl';
 import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui-core/Typography";
+import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar";
 import PersonIcon from "@material-ui/icons/Person";
 import Slide from "@material-ui/core/Slide";
@@ -40,11 +41,10 @@ const AuthForm = ({
   message,
   email,
   register,
-  show,
   direction
 }) => {
   return (
-    <Slide direction={direction} in={show} timeout={1500}>
+    <Slide direction={direction} in={true} timeout={1500}>
       <Paper className={classes.root} elevation={12}>
         <Avatar className={classes.avatar}>
           <PersonIcon />
