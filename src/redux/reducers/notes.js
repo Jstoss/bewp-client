@@ -4,7 +4,7 @@ const initialState = {
   notes: [],
   fetchingNotes: false,
   showingModal: false,
-  error: null
+  noteError: null
 };
 
 export const note = (state = initialState, action) => {
@@ -24,7 +24,7 @@ export const note = (state = initialState, action) => {
       return {
         ...state,
         fetchingNotes: false,
-        error: action.payload
+        noteError: action.payload
       };
     default:
       return state;

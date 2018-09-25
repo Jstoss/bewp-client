@@ -9,6 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar";
 import PersonIcon from "@material-ui/icons/Person";
 import Slide from "@material-ui/core/Slide";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const styles = theme => ({
   root: {
@@ -41,13 +42,14 @@ const AuthForm = ({
   message,
   email,
   register,
-  direction
+  direction,
+  loading
 }) => {
   return (
     <Slide direction={direction} in={true} timeout={1500}>
       <Paper className={classes.root} elevation={12}>
         <Avatar className={classes.avatar}>
-          <PersonIcon />
+          {loading ? (<CircularProgress size={60} color="primary" thickness={4} />) : (<PersonIcon />)}
         </Avatar>
         <Typography variant="headline" component="h3" align="center">
           {message}
@@ -61,7 +63,7 @@ const AuthForm = ({
                 onChange={change}
                 name="email"
                 value={email}
-                id={email}
+                id="email"
                 error={email.length === 0 ? true : false}
               />
             </FormControl>
@@ -73,7 +75,7 @@ const AuthForm = ({
               onChange={change}
               name="username"
               value={username}
-              id={username}
+              id="username"
               error={username.length === 0 ? true : false}
             />
           </FormControl>
@@ -84,7 +86,8 @@ const AuthForm = ({
               onChange={change}
               name="password"
               value={password}
-              id={password}
+              id="password"
+              type="password"
               error={password.length === 0 ? true : false}
             />
           </FormControl>
@@ -92,6 +95,7 @@ const AuthForm = ({
             type="submit"
             variant="extendedFab"
             className={classes.button}
+            color="primary"
             fullWidth
             disabled={
               register

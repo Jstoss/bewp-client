@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import { login } from '../redux/actions';
 
 import AuthForm from "../components/AuthForm";
 
@@ -23,6 +24,8 @@ class Login extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
+    this.setState({ loading: true });
+    this.props.login(this.state, this.props.history);
   };
 
   render() {
@@ -46,6 +49,7 @@ const mapStateToProps = state => {
 
 export default withRouter(
   connect(
-    mapStateToProps
+    mapStateToProps,
+    { login }
   )(Login)
 );

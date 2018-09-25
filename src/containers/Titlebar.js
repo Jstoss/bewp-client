@@ -5,6 +5,7 @@ import { withRouter } from "react-router-dom";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Grid from "@material-ui/core/Grid";
+import { logout } from "../redux/actions";
 
 import UserMenu from "../components/UserMenu";
 
@@ -16,13 +17,13 @@ const styles = theme => ({
     padding: "0 25px"
   },
   toolbar: {
-    '&:hover': {
-      cursor: 'pointer',
+    "&:hover": {
+      cursor: "pointer"
     }
   }
 });
 
-const Titlebar = ({ isLoggedIn, classes, user, history }) => {
+const Titlebar = ({ isLoggedIn, classes, history, logout }) => {
   return (
     <AppBar position="static" className={classes.root}>
       <Grid container justify="space-between" alignItems="center">
@@ -35,7 +36,7 @@ const Titlebar = ({ isLoggedIn, classes, user, history }) => {
           </Toolbar>
         </Grid>
         <Grid item>
-          {isLoggedIn && <UserMenu user={user} />}
+          {isLoggedIn && <UserMenu loggedIn logout={logout}/>}
           {isLoggedIn || <UserMenu />}
         </Grid>
       </Grid>
@@ -45,11 +46,15 @@ const Titlebar = ({ isLoggedIn, classes, user, history }) => {
 
 const mapStateToProps = state => {
   return {
-    isLoggedIn: state.user.isLoggedIn,
-    user: state.user.username
+    isLoggedIn: state.user.isLoggedIn
   };
 };
 
 export default withRouter(
-  withStyles(styles)(connect(mapStateToProps)(Titlebar))
+  withStyles(styles)(
+    connect(
+      mapStateToProps,
+      { logout }
+    )(Titlebar)
+  )
 );

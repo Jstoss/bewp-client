@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import { register } from "../redux/actions";
 
 import AuthForm from "../components/AuthForm";
 
@@ -8,7 +9,8 @@ class Register extends Component {
   state = {
     email: "",
     username: "",
-    password: ""
+    password: "",
+    loading: false,
   };
 
   componentDidMount() {
@@ -24,6 +26,8 @@ class Register extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
+    this.setState({ loading: true });
+    this.props.register(this.state, this.props.history);
   };
 
   render() {
@@ -46,4 +50,9 @@ const mapStateToProps = state => {
   };
 };
 
-export default withRouter(connect(mapStateToProps)(Register));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { register }
+  )(Register)
+);

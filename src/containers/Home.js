@@ -34,8 +34,8 @@ class Home extends Component {
         ) : (
           <React.Fragment>
             {notes.map(note => (
-              <Grid item xs={12}>
-                <NoteCard key={note.id} {...note} />
+              <Grid item xs={12} key={note.id}>
+                <NoteCard  {...note} />
               </Grid>
             ))}
           </React.Fragment>
