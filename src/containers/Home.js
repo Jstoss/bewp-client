@@ -4,6 +4,7 @@ import { fetchNotes } from "../redux/actions";
 import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import NoteCard from "../components/NoteCard";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const styles = theme => ({
   root: {
@@ -27,8 +28,8 @@ class Home extends Component {
         spacing={8}
       >
         {isLoading ? (
-          <Grid item>
-            <h1>Loading...</h1>
+          <Grid item xs={12}>
+            <CircularProgress size={75}/>
           </Grid>
         ) : (
           <React.Fragment>
