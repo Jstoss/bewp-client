@@ -4,12 +4,12 @@ import { fetchNotes } from "../redux/actions";
 import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import NoteCard from "../components/NoteCard";
-import CircularProgress from '@material-ui/core/CircularProgress';
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const styles = theme => ({
   root: {
     width: "100%",
-    marginTop: '20px',
+    marginTop: "20px"
   }
 });
 
@@ -22,20 +22,17 @@ class Home extends Component {
     const { notes, isLoading, classes } = this.props;
 
     return (
-      <Grid
-        className={classes.root}
-        container
-        spacing={8}
-      >
-        {isLoading ? (
+      <Grid className={classes.root} container spacing={8}>
+        {isLoading && (
           <Grid item xs={12}>
-            <CircularProgress size={75}/>
+            <CircularProgress size={75} />
           </Grid>
-        ) : (
+        )}
+        {isLoading || (
           <React.Fragment>
             {notes.map(note => (
               <Grid item xs={12} key={note.id}>
-                <NoteCard  {...note} />
+                <NoteCard {...note} />
               </Grid>
             ))}
           </React.Fragment>

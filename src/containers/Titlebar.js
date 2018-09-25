@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
-import { withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Grid from "@material-ui/core/Grid";
@@ -17,9 +17,11 @@ const styles = theme => ({
     padding: "0 25px"
   },
   toolbar: {
-    "&:hover": {
-      cursor: "pointer"
-    }
+    "& > a": {
+      textDecoration: 'none',
+      color: 'inherit',
+      fontSize: '20px'
+    },
   }
 });
 
@@ -30,13 +32,12 @@ const Titlebar = ({ isLoggedIn, classes, history, logout }) => {
         <Grid item>
           <Toolbar
             className={classes.toolbar}
-            onClick={() => history.push("/")}
           >
-            Lambda Notes
+            <Link to="/">Lambda Notes</Link>
           </Toolbar>
         </Grid>
         <Grid item>
-          {isLoggedIn && <UserMenu loggedIn logout={logout}/>}
+          {isLoggedIn && <UserMenu loggedIn logout={logout} />}
           {isLoggedIn || <UserMenu />}
         </Grid>
       </Grid>
@@ -50,11 +51,9 @@ const mapStateToProps = state => {
   };
 };
 
-export default withRouter(
-  withStyles(styles)(
-    connect(
-      mapStateToProps,
-      { logout }
-    )(Titlebar)
-  )
+export default withStyles(styles)(
+  connect(
+    mapStateToProps,
+    { logout }
+  )(Titlebar)
 );
