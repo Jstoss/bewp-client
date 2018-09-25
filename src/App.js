@@ -14,7 +14,7 @@ class App extends Component {
       <div className="App">
         <Titlebar />
         <Grid container justify="center">
-          <Grid item xs={4}>
+          <Grid item xs={6}>
             <Switch>
               <Route exact path="/" component={Home} />
               <Route exact path="/register" component={Register} />

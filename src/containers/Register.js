@@ -6,6 +6,7 @@ import AuthForm from "../components/AuthForm";
 
 class Register extends Component {
   state = {
+    email: "",
     username: "",
     password: ""
   };
@@ -33,6 +34,7 @@ class Register extends Component {
         submit={this.handleSubmit}
         message="Sign Up"
         direction="left"
+        register
       />
     );
   }
@@ -44,8 +46,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default withRouter(
-  connect(
-    mapStateToProps
-  )(Register)
-);
+export default withRouter(connect(mapStateToProps)(Register));

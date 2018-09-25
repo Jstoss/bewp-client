@@ -13,7 +13,7 @@ import Slide from "@material-ui/core/Slide";
 const styles = theme => ({
   root: {
     ...theme.mixins.gutters(),
-    marginTop: "20px",
+    margin: "20px auto",
     maxWidth: "420px",
     width: "100%",
     padding: "20px 10px 20px"
@@ -49,7 +49,7 @@ const AuthForm = ({
         <Avatar className={classes.avatar}>
           <PersonIcon />
         </Avatar>
-        <Typography variant="headline" component="h3">
+        <Typography variant="headline" component="h3" align="center">
           {message}
         </Typography>
         <form onSubmit={submit} className={classes.form}>
