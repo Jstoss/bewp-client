@@ -4,7 +4,7 @@ const initialState = {
   token: null
 };
 
-export const userReducer = (state = initialState, action) => {
+export const user = (state = initialState, action) => {
   switch (action.type) {
     default:
       return state;

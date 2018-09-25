@@ -5,7 +5,7 @@ const initialState = {
   error: null
 };
 
-export const noteReducer = (state = initialState, action) => {
+export const note = (state = initialState, action) => {
   switch (action.type) {
     default:
       return state;
