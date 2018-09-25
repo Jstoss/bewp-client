@@ -1,19 +1,31 @@
 import React, { Component } from "react";
+import { withStyles } from "@material-ui/core/styles";
 import { fetchNotes } from "../redux/actions";
 import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import NoteCard from "../components/NoteCard";
 
+const styles = theme => ({
+  root: {
+    width: "100%",
+    marginTop: '20px',
+  }
+});
+
 class Home extends Component {
-  componentDidMount() {
+  componentWillMount() {
     this.props.fetchNotes();
   }
 
   render() {
-    const { notes, isLoading } = this.props;
+    const { notes, isLoading, classes } = this.props;
 
     return (
-      <Grid container justify="center">
+      <Grid
+        className={classes.root}
+        container
+        spacing={8}
+      >
         {isLoading ? (
           <Grid item>
             <h1>Loading...</h1>
@@ -21,7 +33,7 @@ class Home extends Component {
         ) : (
           <React.Fragment>
             {notes.map(note => (
-              <Grid item>
+              <Grid item xs={12}>
                 <NoteCard key={note.id} {...note} />
               </Grid>
             ))}
@@ -39,7 +51,9 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  { fetchNotes }
-)(Home);
+export default withStyles(styles)(
+  connect(
+    mapStateToProps,
+    { fetchNotes }
+  )(Home)
+);

@@ -1,14 +1,20 @@
 import React from "react";
+import { withStyles } from '@material-ui/core/styles';
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 
-const NoteCard = ({ title, content }) => {
+const styles = theme => ({
+  root: {
+  }
+});
+
+const NoteCard = ({ title, content, classes: { root } }) => {
   const message =
     content.length > 150 ? `${content.slice(0, 150)}...` : content;
 
   return (
-    <Card>
+    <Card className={root} elevation={4}>
       <CardContent>
         <Typography variant="headline" component="h2">
           {title}
@@ -19,4 +25,4 @@ const NoteCard = ({ title, content }) => {
   );
 };
 
-export default NoteCard;
+export default withStyles(styles)(NoteCard);
