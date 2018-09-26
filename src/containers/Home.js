@@ -10,6 +10,9 @@ const styles = theme => ({
   root: {
     width: "100%",
     marginTop: "20px"
+  },
+  spinner: {
+    margin: '0 auto',
   }
 });
 
@@ -25,7 +28,7 @@ class Home extends Component {
       <Grid className={classes.root} container spacing={8}>
         {isLoading && (
           <Grid item xs={12}>
-            <CircularProgress size={75} />
+            <CircularProgress className={classes.spinner} size={75} />
           </Grid>
         )}
         {isLoading || (

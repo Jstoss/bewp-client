@@ -9,9 +9,6 @@ import { logout } from "../redux/actions";
 
 import UserMenu from "../components/UserMenu";
 
-//dev note: once logging in is updated, replace PersonIcon with new
-//custom stateful component that can use Menus material component
-
 const styles = theme => ({
   root: {
     padding: "0 25px"

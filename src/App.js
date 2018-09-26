@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom";
 import "./App.css";
+import CssBaseline from '@material-ui/core/CssBaseline';
 import Home from "./containers/Home";
 import Grid from "@material-ui/core/Grid";
 
@@ -12,6 +13,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <CssBaseline />
         <Titlebar />
         <Grid container justify="center">
           <Grid item xs={6}>
