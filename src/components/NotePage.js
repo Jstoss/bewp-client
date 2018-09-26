@@ -35,6 +35,11 @@ class NotePage extends Component {
     this.setState(state => ({ editing: !state.editing }));
   };
 
+  handleChange = event => {
+    const { name, value } = event.target;
+    this.setState({ [name]: value });
+  }
+
   render() {
     const {
       classes: { root }
@@ -42,7 +47,7 @@ class NotePage extends Component {
     const { title, content, user_id, currentUserId, editing } = this.state;
     return (
       <Paper className={root}>
-        {editing && <NoteForm {...this.state} />}
+        {editing && <NoteForm {...this.state} change={this.handleChange} />}
         {editing || (
           <React.Fragment>
             {user_id === currentUserId && <p onClick={this.toggleEditing}>edit</p>}
