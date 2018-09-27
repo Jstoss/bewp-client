@@ -51,6 +51,27 @@ export const login = (user, cb, history) => {
   };
 };
 
+export const addNote = (note, cb, token) => {
+  return async function(dispatch) {
+    try{
+      const options = {
+        headers: {
+          Authorization: token
+        }
+      };
+      let response = await axios.post(URL + '/api/notes', note, options);
+      dispatch({ type: NOTES_UPDATED, payload: response.data });
+      cb(true);
+    }catch(e){
+      if(e.response){
+        cb(false, e.response.data.message);
+      }else{
+        cb(false);
+      }
+    }
+  }
+}
+
 export const updateNote = (note, cb, token) => {
   return async function(dispatch) {
     try {

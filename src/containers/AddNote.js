@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
+import { addNote } from "../redux/actions";
 
 import NoteForm from "../components/NoteForm";
 
@@ -32,12 +33,29 @@ class AddNote extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
+    const newNote = {
+      title: this.state.title,
+      content: this.state.content
+    };
+    this.props.addNote(newNote, this.handleFinish, this.props.token)
+  };
+
+  handleFinish = (success, message) => {
+    const errmsg = "Something went wrong adding note...";
+    if (success) {
+      this.props.close();
+    } else if (!success && message) {
+      this.setState({ message: errmsg + message });
+    } else {
+      this.setState({ message: errmsg });
+    }
   };
 
   render() {
     return (
       <Paper className={this.props.classes.root}>
         <NoteForm
+          message={this.state.message}
           title={this.state.title}
           content={this.state.content}
           submit={this.handleSubmit}
@@ -54,4 +72,9 @@ const mapStateToProps = state => {
   };
 };
 
-export default withStyles(styles)(connect(mapStateToProps)(AddNote));
+export default withStyles(styles)(
+  connect(
+    mapStateToProps,
+    { addNote }
+  )(AddNote)
+);

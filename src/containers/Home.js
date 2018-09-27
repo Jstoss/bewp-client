@@ -39,7 +39,7 @@ class Home extends Component {
   };
 
   render() {
-    const { notes, isLoading, classes } = this.props;
+    const { notes, isLoading, classes, loggedIn } = this.props;
 
     return (
       <React.Fragment>
@@ -49,7 +49,7 @@ class Home extends Component {
           open={this.state.editing}
           onClose={this.handleClose}
         >
-          <AddNote />
+          <AddNote close={this.handleClose} />
         </Modal>
         <Grid className={classes.root} container spacing={8}>
           {isLoading && (
@@ -60,16 +60,18 @@ class Home extends Component {
           {isLoading || (
             <React.Fragment>
               <Grid container justify="center">
-                <Grid item>
-                  <Button
-                    variant="fab"
-                    color="primary"
-                    aria-label="Add"
-                    onClick={this.handleOpen}
-                  >
-                    <AddIcon />
-                  </Button>
-                </Grid>
+                {loggedIn && (
+                  <Grid item>
+                    <Button
+                      variant="fab"
+                      color="primary"
+                      aria-label="Add"
+                      onClick={this.handleOpen}
+                    >
+                      <AddIcon />
+                    </Button>
+                  </Grid>
+                )}
               </Grid>
               {notes.map(note => (
                 <Grid item xs={12} key={note.id}>
@@ -87,7 +89,8 @@ class Home extends Component {
 const mapStateToProps = state => {
   return {
     notes: state.note.notes,
-    isLoading: state.note.fetchingNotes
+    isLoading: state.note.fetchingNotes,
+    loggedIn: state.user.isLoggedIn
   };
 };
 
