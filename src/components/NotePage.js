@@ -6,6 +6,7 @@ import { MarkdownPreview } from "react-marked-markdown";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { updateNote, deleteNote } from "../redux/actions";
+import Grid from "@material-ui/core/Grid";
 
 import NoteForm from "./NoteForm";
 
@@ -16,6 +17,7 @@ const styles = theme => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing.unit * 4,
     width: "75%",
+    height: "75%",
     top: "10%",
     left: "50%",
     transform: `translate(-50%)`,
@@ -68,6 +70,14 @@ class NotePage extends Component {
       id: this.state.id
     };
     this.props.updateNote(newNote, this.handleReturn, this.state.token);
+  };
+
+  handleEditCancel = () => {
+    this.setState({
+      editing: false,
+      title: this.props.title,
+      content: this.props.content
+    });
   };
 
   handleReturn = (updated, message) => {
@@ -129,6 +139,7 @@ class NotePage extends Component {
           {editing && (
             <NoteForm
               {...this.state}
+              cancel={this.handleEditCancel}
               change={this.handleChange}
               submit={this.handleSubmit}
             />
@@ -160,16 +171,22 @@ class NotePage extends Component {
                   {errMsg}
                 </Typography>
               )}
-              <Button
-                variant="contained"
-                onClick={this.confirmDelete}
-                color="secondary"
-              >
-                Confirm
-              </Button>
-              <Button variant="contained" onClick={this.cancelDelete}>
-                Cancel
-              </Button>
+              <Grid container justify="center" alignItems="center" spacing={24}>
+                <Grid item>
+                  <Button
+                    variant="contained"
+                    onClick={this.confirmDelete}
+                    color="secondary"
+                  >
+                    Confirm
+                  </Button>
+                </Grid>
+                <Grid item>
+                  <Button variant="contained" onClick={this.cancelDelete}>
+                    Cancel
+                  </Button>
+                </Grid>
+              </Grid>
             </React.Fragment>
           )}
         </Paper>

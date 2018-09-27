@@ -74,7 +74,7 @@ class Home extends Component {
                 )}
               </Grid>
               {notes.map(note => (
-                <Grid item xs={12} key={note.id}>
+                <Grid item xs={12} key={note.id} style={{cursor: 'pointer'}}>
                   <NoteCard {...note} />
                 </Grid>
               ))}

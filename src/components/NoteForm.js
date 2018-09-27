@@ -2,7 +2,7 @@ import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import Typography from '@material-ui/core/Typography';
+import Typography from "@material-ui/core/Typography";
 
 const styles = theme => ({
   root: {
@@ -13,7 +13,7 @@ const styles = theme => ({
     height: "100%"
   },
   button: {
-    width: "75%",
+    width: "50%",
     marginTop: 15
   }
 });
@@ -24,7 +24,8 @@ const NoteForm = ({
   title,
   content,
   classes: { root, button },
-  message
+  message,
+  cancel
 }) => {
   return (
     <form onSubmit={submit} className={root}>
@@ -61,6 +62,14 @@ const NoteForm = ({
         disabled={title.length === 0 || content.length === 0}
       >
         Submit
+      </Button>
+      <Button
+        variant="extendedFab"
+        color="default"
+        className={button}
+        onClick={cancel}
+      >
+        Cancel
       </Button>
     </form>
   );
