@@ -29,18 +29,26 @@ const NoteForm = ({
   return (
     <form onSubmit={submit} className={root}>
       <TextField
+        required
+        label="title"
         onChange={change}
         name="title"
+        placeholder="Title"
+        margin="normal"
         value={title}
         error={title.length === 0 ? true : false}
       />
       <TextField
+        required
         fullWidth
         onChange={change}
+        label="content"
         id="content"
         multiline
         rows="16"
         name="content"
+        placeholder="Content"
+        margin="normal"
         value={content}
         error={content.length === 0 ? true : false}
       />
