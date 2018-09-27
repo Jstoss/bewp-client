@@ -10,7 +10,6 @@ class Register extends Component {
     email: "",
     username: "",
     password: "",
-    loading: false,
   };
 
   componentDidMount() {
@@ -27,8 +26,16 @@ class Register extends Component {
   handleSubmit = event => {
     event.preventDefault();
     this.setState({ loading: true });
-    this.props.register(this.state, this.props.history);
+    this.props.register(this.state, this.handleMessage, this.props.history);
   };
+
+  handleMessage = response => {
+    if(response){
+      this.setState({ loading: false, response });
+    }else{
+      this.setState({ loading: false, response: 'Something went wrong...'});
+    }
+  }
 
   render() {
     return (

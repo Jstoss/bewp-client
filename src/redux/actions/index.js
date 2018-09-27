@@ -22,7 +22,7 @@ export const fetchNotes = () => {
   };
 };
 
-export const register = (user, history) => {
+export const register = (user, cb, history) => {
   return async function(dispatch) {
     try {
       let response = await axios.post(URL + "/api/register", user);
@@ -30,12 +30,13 @@ export const register = (user, history) => {
       dispatch({ type: LOGGED_IN, payload: response.data });
       history.push("/");
     } catch (e) {
+      cb(e.response.data.message);
       dispatch({ type: USER_ERROR, payload: e });
     }
   };
 };
 
-export const login = (user, history) => {
+export const login = (user, cb, history) => {
   return async function(dispatch) {
     try {
       let response = await axios.post(URL + "/api/login", user);
@@ -43,10 +44,15 @@ export const login = (user, history) => {
       dispatch({ type: LOGGED_IN, payload: response.data });
       history.push("/");
     } catch (e) {
+      cb(e.response.data.message);
       dispatch({ type: USER_ERROR, payload: e });
     }
   };
 };
+
+export const updateNote = (note, history) => {
+
+}
 
 export const logout = () => {
   localStorage.removeItem("JLN-USER-TOKEN");

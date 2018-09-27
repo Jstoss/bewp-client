@@ -27,6 +27,7 @@ class UserMenu extends Component {
   render() {
     const { anchorEl } = this.state;
     const { loggedIn } = this.props;
+    const color = loggedIn ? 'default' : 'disabled';
 
     return (
       <React.Fragment>
@@ -36,7 +37,7 @@ class UserMenu extends Component {
           onClick={this.handleClick}
         >
           <Avatar>
-            <PersonIcon />
+            <PersonIcon color={color} />
           </Avatar>
         </Button>
         {loggedIn && (

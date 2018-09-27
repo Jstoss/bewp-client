@@ -25,8 +25,17 @@ class Login extends Component {
   handleSubmit = event => {
     event.preventDefault();
     this.setState({ loading: true });
-    this.props.login(this.state, this.props.history);
+    this.props.login(this.state, this.handleComplete, this.props.history);
   };
+
+  handleComplete = response => {
+    const loading = false;
+    if(response){
+      this.setState({ loading, response });
+    }else{
+      this.setState({ loading, response: 'Something went wrong...' });
+    }
+  }
 
   render() {
     return (

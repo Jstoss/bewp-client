@@ -43,7 +43,8 @@ const AuthForm = ({
   email,
   register,
   direction,
-  loading
+  loading,
+  response
 }) => {
   return (
     <Slide direction={direction} in={true} timeout={1500}>
@@ -54,6 +55,11 @@ const AuthForm = ({
         <Typography variant="headline" component="h3" align="center">
           {message}
         </Typography>
+        {response && (
+          <Typography component="p" align="center">
+            {response}
+          </Typography>
+        )}
         <form onSubmit={submit} className={classes.form}>
           {register && (
             <FormControl required fullWidth>
