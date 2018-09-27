@@ -22,7 +22,7 @@ const styles = theme => ({
     left: "50%",
     transform: `translate(-50%)`,
     overflowY: "scroll"
-  }
+  },
 });
 
 class NotePage extends Component {
@@ -151,7 +151,10 @@ class NotePage extends Component {
                   {title}
                 </Typography>
                 <Typography component="h3">by {name}</Typography>
-                <MarkdownPreview value={content} />
+                <MarkdownPreview
+                  value={content}
+                  markedOptions={{ sanitize: true }}
+                />
                 {user_id === currentUserId && (
                   <React.Fragment>
                     <Button onClick={this.toggleEditing} color="primary">
