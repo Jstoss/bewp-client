@@ -9,6 +9,7 @@ export const LOGGED_OUT = "LOGGED_OUT";
 export const USER_ERROR = "USER_ERROR";
 export const CHECK_PASSED = "CHECK_PASSED";
 export const CHECK_FAILED = "CHECK_FAILED";
+export const NOTES_UPDATED = "NOTES_UPDATED";
 
 export const fetchNotes = () => {
   return async function(dispatch) {
@@ -58,10 +59,36 @@ export const updateNote = (note, cb, token) => {
           Authorization: token
         }
       };
-      let response = await axios.put(URL + `/api/notes/${note.id}`, note, options);
+      let response = await axios.put(
+        URL + `/api/notes/${note.id}`,
+        note,
+        options
+      );
       cb(true);
+      dispatch({ type: NOTES_UPDATED, payload: response.data });
     } catch (e) {
       cb(false, e.response.data.message);
+    }
+  };
+};
+
+export const deleteNote = (id, cb, token) => {
+  return async function(dispatch) {
+    try {
+      const options = {
+        headers: {
+          Authorization: token
+        }
+      };
+      let response = await axios.delete(URL + `/api/notes/${id}`, options);
+      cb(true);
+      dispatch({ type: NOTES_UPDATED, payload: response.data });
+    } catch (e) {
+      if (e.response) {
+        cb(false, e.response.data.message);
+      } else {
+        cb(false, e.message);
+      }
     }
   };
 };

@@ -4,7 +4,8 @@ import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import { MarkdownPreview } from "react-marked-markdown";
 import Typography from "@material-ui/core/Typography";
-import { updateNote } from "../redux/actions";
+import Button from "@material-ui/core/Button";
+import { updateNote, deleteNote } from "../redux/actions";
 
 import NoteForm from "./NoteForm";
 
@@ -24,11 +25,20 @@ const styles = theme => ({
 
 class NotePage extends Component {
   state = {
-    editing: false
+    editing: false,
+    attemptingDelete: false
   };
 
   componentDidMount() {
-    const { title, token, content, id, user_id, currentUserId, username } = this.props;
+    const {
+      title,
+      token,
+      content,
+      id,
+      user_id,
+      currentUserId,
+      username
+    } = this.props;
     this.setState({
       title,
       content,
@@ -61,10 +71,10 @@ class NotePage extends Component {
   };
 
   handleReturn = (updated, message) => {
-    const errmsg = 'Something went wrong updating...';
+    const errmsg = "Something went wrong updating...";
     if (updated) {
       this.setState(state => ({
-        editing: !state.editing,
+        editing: !state.editing
       }));
     } else if (!updated && message) {
       this.setState({ message: errmsg + message });
@@ -72,6 +82,29 @@ class NotePage extends Component {
       this.setState({
         message: errmsg
       });
+    }
+  };
+
+  attemptDelete = () => {
+    this.setState({ attemptingDelete: true });
+  };
+
+  cancelDelete = () => {
+    this.setState({ attemptingDelete: false });
+  };
+
+  confirmDelete = () => {
+    this.props.deleteNote(this.state.id, this.handleFinish, this.state.token);
+  };
+
+  handleFinish = (success, msg) => {
+    const errMsg = "Something went wrong deleting the note...";
+    if (success) {
+      this.setState({ attemptingDelete: false });
+    } else if (!success && msg) {
+      this.setState({ delError: errMsg + msg });
+    } else {
+      this.setState({ delError: errMsg });
     }
   };
 
@@ -86,29 +119,61 @@ class NotePage extends Component {
       currentUserId,
       editing,
       name,
+      attemptingDelete,
+      errMsg,
+      delError
     } = this.state;
     return (
-      <Paper className={root}>
-        {editing && (
-          <NoteForm
-            {...this.state}
-            change={this.handleChange}
-            submit={this.handleSubmit}
-          />
-        )}
-        {editing || (
-          <React.Fragment>
-            <Typography variant="headline" component="h1">
-              {title}
-            </Typography>
-            <Typography component="h3">by {name}</Typography>
-            <MarkdownPreview value={content} />
-            {user_id === currentUserId && (
-              <p onClick={this.toggleEditing}>edit</p>
+      <React.Fragment>
+        <Paper className={root}>
+          {editing && (
+            <NoteForm
+              {...this.state}
+              change={this.handleChange}
+              submit={this.handleSubmit}
+            />
+          )}
+          {editing ||
+            attemptingDelete || (
+              <React.Fragment>
+                <Typography variant="headline" component="h1">
+                  {title}
+                </Typography>
+                <Typography component="h3">by {name}</Typography>
+                <MarkdownPreview value={content} />
+                {user_id === currentUserId && (
+                  <React.Fragment>
+                    <Button onClick={this.toggleEditing} color="primary">
+                      Edit
+                    </Button>
+                    <Button onClick={this.attemptDelete} color="secondary">
+                      Delete
+                    </Button>
+                  </React.Fragment>
+                )}
+              </React.Fragment>
             )}
-          </React.Fragment>
-        )}
-      </Paper>
+          {attemptingDelete && (
+            <React.Fragment>
+              {delError && (
+                <Typography variant="headline" component="h4">
+                  {errMsg}
+                </Typography>
+              )}
+              <Button
+                variant="contained"
+                onClick={this.confirmDelete}
+                color="secondary"
+              >
+                Confirm
+              </Button>
+              <Button variant="contained" onClick={this.cancelDelete}>
+                Cancel
+              </Button>
+            </React.Fragment>
+          )}
+        </Paper>
+      </React.Fragment>
     );
   }
 }
@@ -122,5 +187,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { updateNote }
+  { updateNote, deleteNote }
 )(withStyles(styles)(NotePage));

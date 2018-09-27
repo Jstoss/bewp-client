@@ -1,4 +1,4 @@
-import { GETTING_NOTES, NOTES_RECEIVED, NOTE_ERROR } from "../actions";
+import { GETTING_NOTES, NOTES_RECEIVED, NOTE_ERROR, NOTES_UPDATED } from "../actions";
 
 const initialState = {
   notes: [],
@@ -26,6 +26,11 @@ export const note = (state = initialState, action) => {
         fetchingNotes: false,
         noteError: action.payload
       };
+    case NOTES_UPDATED:
+      return {
+        ...state,
+        notes: action.payload
+      }
     default:
       return state;
   }
