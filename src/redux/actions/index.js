@@ -50,9 +50,21 @@ export const login = (user, cb, history) => {
   };
 };
 
-export const updateNote = (note, history) => {
-
-}
+export const updateNote = (note, cb, token) => {
+  return async function(dispatch) {
+    try {
+      const options = {
+        headers: {
+          Authorization: token
+        }
+      };
+      let response = await axios.put(URL + `/api/notes/${note.id}`, note, options);
+      cb(true);
+    } catch (e) {
+      cb(false, e.response.data.message);
+    }
+  };
+};
 
 export const logout = () => {
   localStorage.removeItem("JLN-USER-TOKEN");

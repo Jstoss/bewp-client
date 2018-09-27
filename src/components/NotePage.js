@@ -4,7 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import { MarkdownPreview } from "react-marked-markdown";
 import Typography from "@material-ui/core/Typography";
-import { updateNote } from '../redux/actions';
+import { updateNote } from "../redux/actions";
 
 import NoteForm from "./NoteForm";
 
@@ -28,7 +28,7 @@ class NotePage extends Component {
   };
 
   componentDidMount() {
-    const { title, content, id, user_id, currentUserId, username } = this.props;
+    const { title, token, content, id, user_id, currentUserId, username } = this.props;
     this.setState({
       title,
       content,
@@ -36,6 +36,7 @@ class NotePage extends Component {
       user_id,
       currentUserId,
       username,
+      token,
       name: username.toUpperCase()
     });
   }
@@ -51,7 +52,28 @@ class NotePage extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-  }
+    const newNote = {
+      title: this.state.title,
+      content: this.state.content,
+      id: this.state.id
+    };
+    this.props.updateNote(newNote, this.handleReturn, this.state.token);
+  };
+
+  handleReturn = (updated, message) => {
+    const errmsg = 'Something went wrong updating...';
+    if (updated) {
+      this.setState(state => ({
+        editing: !state.editing,
+      }));
+    } else if (!updated && message) {
+      this.setState({ message: errmsg + message });
+    } else {
+      this.setState({
+        message: errmsg
+      });
+    }
+  };
 
   render() {
     const {
@@ -63,7 +85,7 @@ class NotePage extends Component {
       user_id,
       currentUserId,
       editing,
-      name
+      name,
     } = this.state;
     return (
       <Paper className={root}>
@@ -71,18 +93,19 @@ class NotePage extends Component {
           <NoteForm
             {...this.state}
             change={this.handleChange}
+            submit={this.handleSubmit}
           />
         )}
         {editing || (
           <React.Fragment>
-            {user_id === currentUserId && (
-              <p onClick={this.toggleEditing}>edit</p>
-            )}
             <Typography variant="headline" component="h1">
               {title}
             </Typography>
             <Typography component="h3">by {name}</Typography>
             <MarkdownPreview value={content} />
+            {user_id === currentUserId && (
+              <p onClick={this.toggleEditing}>edit</p>
+            )}
           </React.Fragment>
         )}
       </Paper>
@@ -92,8 +115,12 @@ class NotePage extends Component {
 
 const mapStateToProps = state => {
   return {
-    currentUserId: state.user.id
+    currentUserId: state.user.id,
+    token: state.user.token
   };
 };
 
-export default connect(mapStateToProps, { updateNote })(withStyles(styles)(NotePage));
+export default connect(
+  mapStateToProps,
+  { updateNote }
+)(withStyles(styles)(NotePage));

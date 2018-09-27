@@ -1,41 +1,50 @@
 import React from "react";
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
+import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
   root: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    width: '100%',
-    height: '100%',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    width: "100%",
+    height: "100%"
   },
   button: {
-    width: '75%',
+    width: "75%",
     marginTop: 15
   }
-})
+});
 
-const NoteForm = ({ submit, change, title, content, classes: { root, button } }) => {
+const NoteForm = ({
+  submit,
+  change,
+  title,
+  content,
+  classes: { root, button },
+  message
+}) => {
   return (
     <form onSubmit={submit} className={root}>
-        <TextField
-          onChange={change}
-          name="title"
-          value={title}
-          error={title.length === 0 ? true : false}
-        />
-        <TextField
-          fullWidth
-          onChange={change}
-          id="content"
-          multiline
-          rows="16"
-          name="content"
-          value={content}
-          error={content.length === 0 ? true : false}
-        />
+      <TextField
+        onChange={change}
+        name="title"
+        value={title}
+        error={title.length === 0 ? true : false}
+      />
+      <TextField
+        fullWidth
+        onChange={change}
+        id="content"
+        multiline
+        rows="16"
+        name="content"
+        value={content}
+        error={content.length === 0 ? true : false}
+      />
+      {message && <Typography component="h4">{message}</Typography>}
       <Button
         type="submit"
         variant="extendedFab"
