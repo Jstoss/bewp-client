@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Switch, Route } from "react-router-dom";
+import { connect } from 'react-redux';
+import { Switch, Route, withRouter } from "react-router-dom";
 import "./App.css";
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Home from "./containers/Home";
@@ -9,7 +10,13 @@ import Titlebar from "./containers/Titlebar";
 import Register from './containers/Register';
 import Login from './containers/Login';
 
+import { checkToken } from './redux/actions';
+
 class App extends Component {
+  componentWillMount(){
+    this.props.checkToken();
+  }
+
   render() {
     return (
       <div className="App">
@@ -29,4 +36,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(connect(null, { checkToken })(App));

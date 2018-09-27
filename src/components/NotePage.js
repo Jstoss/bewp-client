@@ -27,8 +27,8 @@ class NotePage extends Component {
   };
 
   componentDidMount() {
-    const { title, content, id, user_id, currentUserId } = this.props;
-    this.setState({ title, content, id, user_id, currentUserId });
+    const { title, content, id, user_id, currentUserId, username } = this.props;
+    this.setState({ title, content, id, user_id, currentUserId, username, name: username.toUpperCase() });
   }
 
   toggleEditing = () => {
@@ -44,7 +44,7 @@ class NotePage extends Component {
     const {
       classes: { root }
     } = this.props;
-    const { title, content, user_id, currentUserId, editing } = this.state;
+    const { title, content, user_id, currentUserId, editing, name } = this.state;
     return (
       <Paper className={root}>
         {editing && <NoteForm {...this.state} change={this.handleChange} />}
@@ -53,6 +53,9 @@ class NotePage extends Component {
             {user_id === currentUserId && <p onClick={this.toggleEditing}>edit</p>}
             <Typography variant="headline" component="h1">
               {title}
+            </Typography>
+            <Typography component="h3">
+              by {name}
             </Typography>
             <MarkdownPreview value={content} />
           </React.Fragment>

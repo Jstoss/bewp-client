@@ -20,7 +20,7 @@ class NoteCard extends Component {
   };
 
   render() {
-    const { title, content } = this.props;
+    const { title, content, username } = this.props;
     const message =
       content.length > 150 ? `${content.slice(0, 150)}...` : content;
     return (
@@ -29,6 +29,9 @@ class NoteCard extends Component {
           <CardContent>
             <Typography variant="headline" component="h2">
               {title}
+            </Typography>
+            <Typography component="h3">
+              by {username.toUpperCase()}
             </Typography>
             <Typography component="p">{message}</Typography>
           </CardContent>
